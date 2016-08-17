@@ -33,7 +33,7 @@ public class HybrisFlexibleSearch {
         public String catalogName = "";
         @Parameter(names = {"-cv", "-catalogversion", "--catalogversion", "--catalog-version", "-catalog-version"}, description = "session catalog version" )
         public String catalogVersion = "";
-        @Parameter(names = {"-of", "-output-format", "--output-format", "--outputformat", "-format"}, description = "Output format: CSV, TSV, BRD, IMPEX")
+        @Parameter(names = {"-of", "-output-format", "--output-format", "--outputformat", "-format"}, description = "Output format: CSV, CON, TSV, BRD, IMPEX")
         public String outputFormat = "";
         @Parameter(names = {"-u", "-user", "--user"}, description = "Session User")
         public String user = "";
@@ -76,6 +76,7 @@ public class HybrisFlexibleSearch {
                                 "",
                                 HttpMethodsEnum.GET
                     );
+
 
             System.out.println(result);
 
