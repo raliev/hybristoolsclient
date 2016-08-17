@@ -1,0 +1,115 @@
+package com.epam.hybristoolsclient;
+
+import com.beust.jcommander.JCommander;
+import com.beust.jcommander.Parameter;
+
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+/**
+ * Created by Rauf_Aliev on 8/16/2016.
+ */
+
+public class HybrisTypeSystem {
+    static class JCommanderCmd {
+        @Parameter(names = {"-type", "--type", "-t"}, description = "Type")
+        public String type = "";
+    }
+
+    public static void main(String[] args) throws UnsupportedEncodingException {
+
+        JCommanderCmd jct = new JCommanderCmd();
+        new JCommander(jct, args);
+
+        //String query = EmptyIfNull(cmdLine.getOptionValue("q"));
+        //String fields = EmptyIfNull(cmdLine.getOptionValue("f"));
+        //String itemtype = EmptyIfNull(cmdLine.getOptionValue("i"));
+
+        String result =
+                HttpRequest.execute(Conf.getWebRoot() + "/tools/typesystem/type/"+jct.type+"/attributes",
+                        String.join("&",
+                                Arrays.asList(
+                                        )
+                        ),
+                        "",
+                        HttpMethodsEnum.GET
+                );
+
+        List<String> lines = Arrays.asList(result.split("\n"));
+        List<List<String>> csv = new ArrayList<>();
+        for (String line : lines)
+        {
+            List<String> columns = new ArrayList<>();
+            columns.addAll(Arrays.asList(line.split("\t")));
+            csv.add(columns);
+        }
+        writeCSV( csv);
+        //System.out.println(result);
+
+        //boolean withGui = !cmdLine.hasOption("no-gui");
+        //int port = cmdLine.hasOption("port") ?
+        //        ((Number)cmdLine.getParsedOptionValue("port")).intValue() : DEFAULT_PORT;
+
+
+    }
+    public static void writeCSV(List<List<String>> rows) {
+
+
+        if (rows.size() == 0)
+            throw new RuntimeException("No rows");
+
+        // normalize data
+        int longest = 0;
+        for (List<String> row : rows)
+            if (row.size() > longest)
+                longest = row.size();
+
+        for (List<String> row : rows)
+            while (row.size() < longest)
+                row.add("");
+
+        if (longest == 0)
+            throw new RuntimeException("No colums");
+
+        // fix special characters
+        for (int i = 0; i < rows.size(); i++)
+            for (int j = 0; j < rows.get(i).size(); j++)
+                rows.get(i).set(j, fixSpecial(rows.get(i).get(j)));
+
+        // get the maximum size of one column
+        int[] maxColumn = new int[rows.get(0).size()];
+
+        for (int i = 0; i < rows.size(); i++)
+            for (int j = 0; j < rows.get(i).size(); j++)
+                if (maxColumn[j] < rows.get(i).get(j).length())
+                    maxColumn[j] = rows.get(i).get(j).length();
+
+        // create the format string
+        String outFormat = "";
+        for (int max : maxColumn)
+            outFormat += "%-" + (max + 1) + "s, ";
+        outFormat = outFormat.substring(0, outFormat.length() - 2) + "\n";
+
+        // print the data
+        for (List<String> row : rows)
+            System.out.printf(outFormat, row.toArray());
+
+    }
+
+    private static String fixSpecial(String s) {
+
+        s = s.replaceAll("(\")", "$1$1");
+
+        if (s.contains("\n") || s.contains(",") || s.contains("\"") ||
+                s.trim().length() < s.length()) {
+            s = "\"" + s + "\"";
+        }
+
+        return s;
+    }
+
+
+}

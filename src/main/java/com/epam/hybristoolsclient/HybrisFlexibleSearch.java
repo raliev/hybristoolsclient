@@ -15,33 +15,33 @@ import java.net.URLEncoder;
  * Created by Rauf_Aliev on 8/16/2016.
  */
 
-class JCommanderCmd {
-    @Parameter(names = {"-q", "-query", "--query"}, description = "Flexible Query")
-    public String query = "";
-    @Parameter(names = {"-f", "-fields", "--fields"}, description = "Attributes")
-    public String fields = "";
-    @Parameter(names = {"-i", "-it", "-itemtype", "--itemtype"}, description = "The shortcut X for 'select {pk} from {X}'")
-    public String itemtype = "";
-    @Parameter(names = {"-ref", "--ref"}, description = "Reference rules. Example: \"Category:code,name Product:code\" ")
-    public String ref = "";
-    @Parameter(names = {"-l", "-language", "--language", "--lang", "-lang"}, description = "current session language" )
-    public String language = "";
-    @Parameter(names = {"-cn", "-catalog", "--catalog", "--catalogName", "--catalog-name","-catalog-name"}, description = "catalog name" )
-    public String catalogName = "";
-    @Parameter(names = {"-cv", "-catalogversion", "--catalogversion", "--catalog-version", "-catalog-version"}, description = "session catalog version" )
-    public String catalogVersion = "";
-    @Parameter(names = {"-of", "-output-format", "--output-format", "--outputformat", "-format"}, description = "Output format: CSV, TSV, BRD, IMPEX")
-    public String outputFormat = "";
-    @Parameter(names = {"-u", "-user", "--user"}, description = "Session User")
-    public String user = "";
-    @Parameter(names = {"-debug", "--debug"}, description = "Debug mode")
-    public boolean debug = false;
-    @Parameter(names = {"-mr", "-maxResults", "-maxresults", "--max-results", "-max-results"}, description = "max number of results")
-    public int maxResults = 1000000;
-}
+
 
 public class HybrisFlexibleSearch {
-
+    static class JCommanderCmd {
+        @Parameter(names = {"-q", "-query", "--query"}, description = "Flexible Query")
+        public String query = "";
+        @Parameter(names = {"-f", "-fields", "--fields"}, description = "Attributes")
+        public String fields = "";
+        @Parameter(names = {"-i", "-it", "-itemtype", "--itemtype"}, description = "The shortcut X for 'select {pk} from {X}'")
+        public String itemtype = "";
+        @Parameter(names = {"-ref", "--ref"}, description = "Reference rules. Example: \"Category:code,name Product:code\" ")
+        public String ref = "";
+        @Parameter(names = {"-l", "-language", "--language", "--lang", "-lang"}, description = "current session language" )
+        public String language = "";
+        @Parameter(names = {"-cn", "-catalog", "--catalog", "--catalogName", "--catalog-name","-catalog-name"}, description = "catalog name" )
+        public String catalogName = "";
+        @Parameter(names = {"-cv", "-catalogversion", "--catalogversion", "--catalog-version", "-catalog-version"}, description = "session catalog version" )
+        public String catalogVersion = "";
+        @Parameter(names = {"-of", "-output-format", "--output-format", "--outputformat", "-format"}, description = "Output format: CSV, TSV, BRD, IMPEX")
+        public String outputFormat = "";
+        @Parameter(names = {"-u", "-user", "--user"}, description = "Session User")
+        public String user = "";
+        @Parameter(names = {"-debug", "--debug"}, description = "Debug mode")
+        public boolean debug = false;
+        @Parameter(names = {"-mr", "-maxResults", "-maxresults", "--max-results", "-max-results"}, description = "max number of results")
+        public int maxResults = 1000000;
+    }
     public static void main(String[] args) throws UnsupportedEncodingException {
 
         JCommanderCmd jct = new JCommanderCmd();
