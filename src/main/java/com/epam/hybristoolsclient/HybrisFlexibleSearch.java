@@ -36,6 +36,8 @@ class JCommanderCmd {
     public String user = "";
     @Parameter(names = {"-debug", "--debug"}, description = "Debug mode")
     public boolean debug = false;
+    @Parameter(names = {"-mr", "-maxResults", "-maxresults", "--max-results", "-max-results"}, description = "max number of results")
+    public int maxResults = 1000000;
 }
 
 public class HybrisFlexibleSearch {
@@ -44,9 +46,6 @@ public class HybrisFlexibleSearch {
 
         JCommanderCmd jct = new JCommanderCmd();
         new JCommander(jct, args);
-
-        System.out.println("query="+jct.query.toString());
-        System.out.println("fields="+jct.fields.toString());
 
             //String query = EmptyIfNull(cmdLine.getOptionValue("q"));
             //String fields = EmptyIfNull(cmdLine.getOptionValue("f"));
@@ -69,6 +68,7 @@ public class HybrisFlexibleSearch {
                                                                 String.join("=", getParam("catalogName", jct.catalogName)),
                                                                 String.join("=", getParam("catalogVersion", jct.catalogVersion)),
                                                                 String.join("=", getParam("outputFormat", jct.outputFormat)),
+                                                                String.join("=", getParam("maxResults", jct.maxResults+"")),
                                                                 String.join("=", getParam("ref", jct.ref)
                                                                 )
                                                 )
