@@ -56,7 +56,22 @@ public class HttpRequest {
 
         try {
             //Create connection
-            URL url = new URL(targetURL + (urlParameters.equals("") ? "" : "?") + urlParameters);
+            URL url;
+            if (method.equals(HttpMethodsEnum.GET)) {
+                url = new URL(targetURL + (urlParameters.equals("") ? "" : "?") + urlParameters);
+            } else
+            if (method.equals(HttpMethodsEnum.POST))
+            {
+                url = new URL(targetURL);
+                if (!urlParameters.equals("") && postData.equals("")) {
+                    postData = urlParameters;
+                }
+            }
+            else
+            {
+                throw new Exception("Method "+method.toString()+" is not supported");
+            }
+
             trustAllHosts();
             HttpsURLConnection.setDefaultHostnameVerifier ((hostname, session) -> true);
             connection = (HttpURLConnection) url.openConnection();

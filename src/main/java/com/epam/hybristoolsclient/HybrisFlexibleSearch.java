@@ -43,6 +43,8 @@ public class HybrisFlexibleSearch  {
         public boolean debug = false;
         @Parameter(names = {"-mr", "-maxResults", "-maxresults", "--max-results", "-max-results"}, description = "max number of results")
         public int maxResults = 1000000;
+        @Parameter(names = {"-b", "-beatify", "--beautify" })
+        public boolean beautify = false;
 
     }
     public static void main(String[] args) throws UnsupportedEncodingException {
@@ -84,12 +86,13 @@ public class HybrisFlexibleSearch  {
                                                                 String.join("=", getParam("catalogVersion", jct.catalogVersion)),
                                                                 String.join("=", getParam("outputFormat", jct.outputFormat)),
                                                                 String.join("=", getParam("maxResults", jct.maxResults+"")),
-                                                                String.join("=", getParam("ref", jct.ref)
+                                                                String.join("=", getParam("ref", jct.ref)),
+                                                                String.join("=", getParam("beautify", jct.beautify ? "true" : "false")
                                                                 )
                                                 )
                                         ),
                                 "",
-                                HttpMethodsEnum.GET
+                                HttpMethodsEnum.POST
                     );
 
 
