@@ -2,9 +2,10 @@ package com.epam.hybristoolsclient;
 
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
-import com.epam.hybristoolsclient.com.epam.hybristoolsclient.helpers.CSVPrint;
+import com.beust.jcommander.ParameterException;
+import com.epam.hybristoolsclient.utils.CSVPrint;
+import com.epam.hybristoolsclient.utils.CommonUtils;
 
-import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,18 +16,32 @@ import java.util.List;
  */
 
 public class HybrisTypeSystem {
-    static class JCommanderCmd {
+    static class JCommanderCmd extends CommonCommands{
         @Parameter(names = {"-type", "--type", "-t"}, description = "Type")
         public String type = "";
 
         @Parameter(names = {"-attribute", "--attribute", "-a"}, description = "Attribute")
         public String attribute = "";
+
     }
 
     public static void main(String[] args) throws UnsupportedEncodingException {
 
+
+        String pn = "HybrisTypeSystem";
         JCommanderCmd jct = new JCommanderCmd();
-        new JCommander(jct, args);
+        try {
+            new JCommander(jct, args);
+        } catch (ParameterException e)
+        {
+                        CommonUtils.getHelp(jct, pn);
+                        return;
+        }
+        if (jct.help) {
+                        CommonUtils.getHelp(jct, pn);
+                        return;
+        }
+
 
         //String query = EmptyIfNull(cmdLine.getOptionValue("q"));
         //String fields = EmptyIfNull(cmdLine.getOptionValue("f"));
@@ -34,8 +49,9 @@ public class HybrisTypeSystem {
 
 
         String request = jct.attribute.equals("") ? "/attributes" : "/attribute/"+jct.attribute;
+        if (jct.type.equals("") ) { request = "/types"; }  else { request = "/type/"+jct.type + request; }
         String result =
-                HttpRequest.execute(Conf.getWebRoot() + "tools/typesystem/type/"+jct.type+request,
+                HttpRequest.execute(Conf.getWebRoot() + "tools/typesystem"+request,
                         String.join("&",
                                 Arrays.asList(
                                         )
@@ -44,15 +60,7 @@ public class HybrisTypeSystem {
                         HttpMethodsEnum.GET
                 );
 
-        List<String> lines = Arrays.asList(result.split("\n"));
-        List<List<String>> csv = new ArrayList<>();
-        for (String line : lines)
-        {
-            List<String> columns = new ArrayList<>();
-            columns.addAll(Arrays.asList(line.split("\t")));
-            csv.add(columns);
-        }
-        CSVPrint.writeCSV( csv);
+        CSVPrint.printAsCSV(result, false);
         //System.out.println(result);
 
         //boolean withGui = !cmdLine.hasOption("no-gui");
@@ -61,6 +69,7 @@ public class HybrisTypeSystem {
 
 
     }
+
 
 
 

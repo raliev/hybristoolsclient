@@ -2,6 +2,8 @@ package com.epam.hybristoolsclient;
 
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
+import com.beust.jcommander.ParameterException;
+import com.epam.hybristoolsclient.utils.CommonUtils;
 
 
 import javax.security.auth.login.Configuration;
@@ -17,8 +19,8 @@ import java.net.URLEncoder;
 
 
 
-public class HybrisFlexibleSearch {
-    static class JCommanderCmd {
+public class HybrisFlexibleSearch  {
+    static class JCommanderCmd extends CommonCommands {
         @Parameter(names = {"-q", "-query", "--query"}, description = "Flexible Query")
         public String query = "";
         @Parameter(names = {"-f", "-fields", "--fields"}, description = "Attributes")
@@ -41,11 +43,24 @@ public class HybrisFlexibleSearch {
         public boolean debug = false;
         @Parameter(names = {"-mr", "-maxResults", "-maxresults", "--max-results", "-max-results"}, description = "max number of results")
         public int maxResults = 1000000;
+
     }
     public static void main(String[] args) throws UnsupportedEncodingException {
 
+        String pn = "HybrisFlexibleSearch";
         JCommanderCmd jct = new JCommanderCmd();
-        new JCommander(jct, args);
+        try {
+            new JCommander(jct, args);
+        } catch (ParameterException e)
+        {
+            CommonUtils.getHelp(jct, pn);
+            return;
+        }
+        if (jct.help) {
+            CommonUtils.getHelp(jct, pn);
+            return;
+        }
+
 
             //String query = EmptyIfNull(cmdLine.getOptionValue("q"));
             //String fields = EmptyIfNull(cmdLine.getOptionValue("f"));

@@ -1,5 +1,7 @@
-package com.epam.hybristoolsclient.com.epam.hybristoolsclient.helpers;
+package com.epam.hybristoolsclient.utils;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -7,7 +9,19 @@ import java.util.List;
  */
 public class CSVPrint {
 
-    public static void writeCSV(List<List<String>> rows) {
+    public static void printAsCSV(String result, boolean fix) {
+        List<String> lines = Arrays.asList(result.split("\n"));
+        List<List<String>> csv = new ArrayList<>();
+        for (String line : lines)
+        {
+            List<String> columns = new ArrayList<>();
+            columns.addAll(Arrays.asList(line.split("\t")));
+            csv.add(columns);
+        }
+        CSVPrint.writeCSV(csv, fix);
+    }
+
+    public static void writeCSV(List<List<String>> rows, boolean fix) {
 
 
         if (rows.size() == 0)
@@ -29,7 +43,7 @@ public class CSVPrint {
         // fix special characters
         for (int i = 0; i < rows.size(); i++)
             for (int j = 0; j < rows.get(i).size(); j++)
-                rows.get(i).set(j, fixSpecial(rows.get(i).get(j)));
+                rows.get(i).set(j, fix ? fixSpecial(rows.get(i).get(j)) : rows.get(i).get(j));
 
         // get the maximum size of one column
         int[] maxColumn = new int[rows.get(0).size()];
