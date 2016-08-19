@@ -1,15 +1,32 @@
 package com.epam.hybristoolsclient;
 
-import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.X509TrustManager;
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.config.Registry;
+import org.apache.http.config.RegistryBuilder;
+import org.apache.http.conn.socket.ConnectionSocketFactory;
+import org.apache.http.conn.socket.PlainConnectionSocketFactory;
+import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
+import org.apache.http.ssl.SSLContextBuilder;
+import org.apache.http.ssl.TrustStrategy;
+import org.apache.http.util.EntityUtils;
+
+import javax.net.ssl.*;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 
@@ -44,7 +61,12 @@ public class HttpRequest {
         {
             SSLContext sc = SSLContext.getInstance("TLS");
             sc.init(null, trustAllCerts, new java.security.SecureRandom());
+
             HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+            HostnameVerifier allHostsValid = new HostnameVerifier() {
+                public boolean verify(String hostname, SSLSession session) { return true; }
+            };
+            HttpsURLConnection.setDefaultHostnameVerifier(allHostsValid);
         } catch (Exception e)
         {
             e.printStackTrace();
@@ -114,4 +136,68 @@ public class HttpRequest {
             }
         }
     }
+
+    public static String uploadFileToHybris(String fileToUpload, String URL) throws IOException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException {
+
+        trustAllHosts();
+        HttpsURLConnection.setDefaultHostnameVerifier ((hostname, session) -> true);
+        //CloseableHttpClient httpClient = HttpClients.createDefault();
+        HttpClient httpClient = createHttpClient_AcceptsUntrustedCerts();
+        HttpPost uploadFile = new HttpPost(URL);
+        MultipartEntityBuilder builder = MultipartEntityBuilder.create();
+        builder.addTextBody("name", "Name", ContentType.TEXT_PLAIN);
+
+        // This attaches the file to the POST:
+        File f = new File(fileToUpload);
+        builder.addBinaryBody(
+                "file",
+                new FileInputStream(f),
+                ContentType.APPLICATION_OCTET_STREAM,
+                f.getName()
+        );
+
+        HttpEntity multipart = builder.build();
+        uploadFile.setEntity(multipart);
+        HttpResponse response = httpClient.execute(uploadFile);
+        HttpEntity responseEntity = response.getEntity();
+        return EntityUtils.toString(responseEntity);
+    }
+
+    public static HttpClient createHttpClient_AcceptsUntrustedCerts() throws KeyStoreException, NoSuchAlgorithmException, KeyManagementException {
+        HttpClientBuilder b = HttpClientBuilder.create();
+
+        // setup a Trust Strategy that allows all certificates.
+        //
+        SSLContext sslContext = new SSLContextBuilder().loadTrustMaterial(null, new TrustStrategy() {
+            public boolean isTrusted(X509Certificate[] arg0, String arg1) throws CertificateException {
+                return true;
+            }
+        }).build();
+        b.setSslcontext( sslContext);
+
+        // don't check Hostnames, either.
+        //      -- use SSLConnectionSocketFactory.getDefaultHostnameVerifier(), if you don't want to weaken
+        HostnameVerifier hostnameVerifier = SSLConnectionSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER;
+
+        // here's the special part:
+        //      -- need to create an SSL Socket Factory, to use our weakened "trust strategy";
+        //      -- and create a Registry, to register it.
+        //
+        SSLConnectionSocketFactory sslSocketFactory = new SSLConnectionSocketFactory(sslContext, hostnameVerifier);
+        Registry<ConnectionSocketFactory> socketFactoryRegistry = RegistryBuilder.<ConnectionSocketFactory>create()
+                .register("http", PlainConnectionSocketFactory.getSocketFactory())
+                .register("https", sslSocketFactory)
+                .build();
+
+        // now, we create connection-manager using our Registry.
+        //      -- allows multi-threaded use
+        PoolingHttpClientConnectionManager connMgr = new PoolingHttpClientConnectionManager( socketFactoryRegistry);
+        b.setConnectionManager( connMgr);
+
+        // finally, build the HttpClient;
+        //      -- done!
+        HttpClient client = b.build();
+        return client;
+    }
+
 }

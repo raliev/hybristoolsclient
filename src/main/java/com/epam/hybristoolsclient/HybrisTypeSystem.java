@@ -20,6 +20,9 @@ public class HybrisTypeSystem {
         @Parameter(names = {"-type", "--type", "-t"}, description = "Type")
         public String type = "";
 
+        @Parameter(names = {"-pk"}, description = "hybris PK")
+        public String pk = "";
+
         @Parameter(names = {"-attribute", "--attribute", "-a"}, description = "Attribute")
         public String attribute = "";
 
@@ -47,13 +50,25 @@ public class HybrisTypeSystem {
         //String fields = EmptyIfNull(cmdLine.getOptionValue("f"));
         //String itemtype = EmptyIfNull(cmdLine.getOptionValue("i"));
 
-
         String request = jct.attribute.equals("") ? "/attributes" : "/attribute/"+jct.attribute;
-        if (jct.type.equals("") ) { request = "/types"; }  else { request = "/type/"+jct.type + request; }
+
+        if (!jct.pk.equals(""))
+        {
+            request = "/pk/"+jct.pk;
+        }
+        else
+        {
+                if (jct.type.equals(""))
+                    { request = "/types"; }
+                  else
+                    { request = "/type/"+jct.type + request;}
+        }
+
         String result =
                 HttpRequest.execute(Conf.getWebRoot() + "tools/typesystem"+request,
                         String.join("&",
                                 Arrays.asList(
+
                                         )
                         ),
                         "",

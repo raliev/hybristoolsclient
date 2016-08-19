@@ -45,6 +45,8 @@ public class HybrisFlexibleSearch  {
         public int maxResults = 1000000;
         @Parameter(names = {"-b", "-beatify", "--beautify" })
         public boolean beautify = false;
+        @Parameter(names = {"-pk"})
+        public String pk;
 
     }
     public static void main(String[] args) throws UnsupportedEncodingException {
@@ -68,8 +70,8 @@ public class HybrisFlexibleSearch  {
             //String fields = EmptyIfNull(cmdLine.getOptionValue("f"));
             //String itemtype = EmptyIfNull(cmdLine.getOptionValue("i"));
 
-            if (jct.query.equals("") && jct.itemtype.equals("")) {
-                System.out.println("You need to specify either -query or -itemtype");
+            if (jct.query.equals("") && jct.itemtype.equals("") && jct.pk.equals("")) {
+                System.out.println("You need to specify either -query or -itemtype or -pk");
                 return;
             }
 
@@ -77,17 +79,18 @@ public class HybrisFlexibleSearch  {
             HttpRequest.execute(Conf.getWebRoot() + "/tools/flexiblesearch/execute",
                                 String.join("&",
                                                 Arrays.asList(
-                                                                String.join("=", getParam("query", jct.query) ),
-                                                                String.join("=", getParam("fields", jct.fields)),
-                                                                String.join("=", getParam("itemtype", jct.itemtype)),
-                                                                String.join("=", getParam("debug", jct.debug ? "true" : "false")),
-                                                                String.join("=", getParam("language", jct.language)),
-                                                                String.join("=", getParam("catalogName", jct.catalogName)),
-                                                                String.join("=", getParam("catalogVersion", jct.catalogVersion)),
-                                                                String.join("=", getParam("outputFormat", jct.outputFormat)),
-                                                                String.join("=", getParam("maxResults", jct.maxResults+"")),
-                                                                String.join("=", getParam("ref", jct.ref)),
-                                                                String.join("=", getParam("beautify", jct.beautify ? "true" : "false")
+                                                                String.join("=", CommonUtils.getParam("query", jct.query) ),
+                                                                String.join("=", CommonUtils.getParam("fields", jct.fields)),
+                                                                String.join("=", CommonUtils.getParam("itemtype", jct.itemtype)),
+                                                                String.join("=", CommonUtils.getParam("debug", jct.debug ? "true" : "false")),
+                                                                String.join("=", CommonUtils.getParam("language", jct.language)),
+                                                                String.join("=", CommonUtils.getParam("catalogName", jct.catalogName)),
+                                                                String.join("=", CommonUtils.getParam("catalogVersion", jct.catalogVersion)),
+                                                                String.join("=", CommonUtils.getParam("outputFormat", jct.outputFormat)),
+                                                                String.join("=", CommonUtils.getParam("maxResults", jct.maxResults+"")),
+                                                                String.join("=", CommonUtils.getParam("ref", jct.ref)),
+                                                                String.join("=", CommonUtils.getParam("beautify", jct.beautify ? "true" : "false")),
+                                                                String.join("=", CommonUtils.getParam("pk", jct.pk)
                                                                 )
                                                 )
                                         ),
@@ -105,16 +108,7 @@ public class HybrisFlexibleSearch  {
 
     }
 
-    private static List<String> getParam(String queryName, String query) throws UnsupportedEncodingException {
-        List<String> params = new ArrayList<String>();
-        if (query.equals(""))
-                {   return params; }
-        else {
-                    params.add(queryName);
-                    params.add(URLEncoder.encode(query, "UTF-8"));
-                    return params;
-        }
-    }
+
 
     private static String EmptyIfNull(String s) {
         return s == null ? "" : s;
