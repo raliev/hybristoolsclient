@@ -1,0 +1,3 @@
+cronJob                      , SyncItemCronJob                                                  ,  , [UNIQ], [!] 
+sequenceNumber               , java.lang.Integer                                                ,  , [UNIQ], [!] 
+step                         , Step                                                             ,  , [UNIQ], [!] 

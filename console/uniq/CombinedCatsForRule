@@ -1,0 +1,3 @@
+categoryCode                 , java.lang.String                                                 ,  , [UNIQ], [!] 
+conditionId                  , java.lang.Integer                                                ,  , [UNIQ], [!] 
+rule                         , PromotionSourceRule                                              ,  , [UNIQ], [!] 

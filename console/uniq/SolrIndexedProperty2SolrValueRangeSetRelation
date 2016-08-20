@@ -1,0 +1,3 @@
+language                                            , Language                                                         ,  , [UNIQ], [o] 
+source                                              , SolrIndexedProperty                                              ,  , [UNIQ], [!] 
+target                                              , SolrValueRangeSet                                                ,  , [UNIQ], [!] 

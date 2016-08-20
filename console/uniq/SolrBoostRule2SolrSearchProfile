@@ -1,0 +1,3 @@
+language                              , Language                                                         ,  , [UNIQ], [o] 
+source                                , SolrBoostRule                                                    ,  , [UNIQ], [!] 
+target                                , AbstractSolrSearchProfile                                        ,  , [UNIQ], [!] 

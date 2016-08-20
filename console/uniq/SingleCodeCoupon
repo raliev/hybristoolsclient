@@ -1,0 +1,1 @@
+couponId                     , java.lang.String                                                 , The Unique identifier for the coupon (for Single Code Coupons this attribute functions as coupon code, for Multi Code Coupons this attribute functions as prefix for the generated coupon codes.) , [UNIQ], [!] 

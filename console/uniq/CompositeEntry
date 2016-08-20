@@ -1,0 +1,3 @@
+code                         , java.lang.String                                                 , Code               , [UNIQ], [!] 
+executableCronJob            , CronJob                                                          , Executable CronJob , [UNIQ], [o] 
+triggerableJob               , Job                                                              , Executable Job     , [UNIQ], [o] 

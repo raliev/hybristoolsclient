@@ -1,0 +1,3 @@
+attribute                      , ClassificationAttribute                                          ,                                          , [UNIQ], [o] 
+attributeAssignment            , ClassAttributeAssignment                                         ,                                          , [UNIQ], [o] 
+value                          , ClassificationAttributeValue                                     ,                                          , [UNIQ], [!] 

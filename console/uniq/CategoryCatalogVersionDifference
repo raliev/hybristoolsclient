@@ -1,0 +1,6 @@
+cronJob                                , CompareCatalogVersionsCronJob                                    ,  , [UNIQ], [!] 
+sourceVersion                          , CatalogVersion                                                   ,  , [UNIQ], [!] 
+targetVersion                          , CatalogVersion                                                   ,  , [UNIQ], [!] 
+mode                                   , CategoryDifferenceMode                                           ,  , [UNIQ], [!] 
+sourceCategory                         , Category                                                         ,  , [UNIQ], [o] 
+targetCategory                         , Category                                                         ,  , [UNIQ], [o] 

@@ -1,0 +1,4 @@
+executionId                  , java.lang.String                                                 ,  , [UNIQ], [!] 
+id                           , java.lang.String                                                 ,  , [UNIQ], [!] 
+process                      , DistributedProcess                                               ,  , [UNIQ], [!] 
+type                         , BatchType                                                        ,  , [UNIQ], [!] 

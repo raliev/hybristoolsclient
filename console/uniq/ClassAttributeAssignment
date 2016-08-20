@@ -1,0 +1,3 @@
+classificationAttribute        , ClassificationAttribute                                          ,  , [UNIQ], [!] 
+classificationClass            , ClassificationClass                                              ,  , [UNIQ], [!] 
+systemVersion                  , ClassificationSystemVersion                                      ,  , [UNIQ], [o] 

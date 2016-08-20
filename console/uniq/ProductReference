@@ -1,0 +1,3 @@
+referenceType                , ProductReferenceTypeEnum                                         ,  , [UNIQ], [o] 
+source                       , Product                                                          ,  , [UNIQ], [!] 
+target                       , Product                                                          ,  , [UNIQ], [!] 

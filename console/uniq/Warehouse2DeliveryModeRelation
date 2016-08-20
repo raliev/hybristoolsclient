@@ -1,0 +1,3 @@
+language                             , Language                                                         ,  , [UNIQ], [o] 
+source                               , Warehouse                                                        ,  , [UNIQ], [!] 
+target                               , DeliveryMode                                                     ,  , [UNIQ], [!] 

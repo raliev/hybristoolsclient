@@ -46,7 +46,7 @@ public class HybrisFlexibleSearch  {
         @Parameter(names = {"-b", "-beatify", "--beautify" })
         public boolean beautify = false;
         @Parameter(names = {"-pk"})
-        public String pk;
+        public String pk = "";
 
     }
     public static void main(String[] args) throws UnsupportedEncodingException {

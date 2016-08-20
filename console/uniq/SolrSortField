@@ -1,0 +1,3 @@
+ascending                    , java.lang.Boolean                                                ,  , [UNIQ], [!] 
+fieldName                    , java.lang.String                                                 ,  , [UNIQ], [!] 
+sort                         , SolrSort                                                         ,  , [UNIQ], [!] 

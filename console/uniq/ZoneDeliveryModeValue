@@ -1,0 +1,4 @@
+currency                     , Currency                                                         ,  , [UNIQ], [!] 
+deliveryMode                 , ZoneDeliveryMode                                                 ,  , [UNIQ], [!] 
+minimum                      , java.lang.Double                                                 ,  , [UNIQ], [!] 
+zone                         , Zone                                                             ,  , [UNIQ], [!] 

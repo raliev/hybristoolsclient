@@ -1,0 +1,3 @@
+catalogVersion                      , CatalogVersion                                                   , Catalog version , [UNIQ], [!] 
+code                                , java.lang.String                                                 ,                 , [UNIQ], [!] 
+uid                                 , java.lang.String                                                 , Id              , [UNIQ], [!] 

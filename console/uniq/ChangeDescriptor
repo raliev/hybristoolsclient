@@ -1,0 +1,3 @@
+cronJob                      , CronJob                                                          ,  , [UNIQ], [!] 
+sequenceNumber               , java.lang.Integer                                                ,  , [UNIQ], [!] 
+step                         , Step                                                             ,  , [UNIQ], [!] 

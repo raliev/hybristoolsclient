@@ -1,0 +1,4 @@
+code                                , java.lang.String                                                 ,                                                                     , [UNIQ], [o] 
+maxPriceTolerance                   , java.lang.Double                                                 ,                                                                     , [UNIQ], [!] 
+sourceVersion                       , CatalogVersion                                                   ,                                                                     , [UNIQ], [!] 
+targetVersion                       , CatalogVersion                                                   ,                                                                     , [UNIQ], [!] 

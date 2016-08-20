@@ -1,0 +1,3 @@
+language                                         , Language                                                         ,  , [UNIQ], [o] 
+source                                           , SolrFacetReconfiguration                                         ,  , [UNIQ], [!] 
+target                                           , AbstractSolrSearchProfile                                        ,  , [UNIQ], [!] 

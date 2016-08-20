@@ -16,6 +16,7 @@ import java.io.*;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -24,14 +25,31 @@ import java.util.List;
 public class HybrisMedia {
 
     static class JCommanderCmd extends CommonCommands{
-        @Parameter(names = {"-i"}, required =  true, description = "File to send to hybris")
+        @Parameter(names = {"-i"}, required =  false, description = "File to send to hybris")
         public String filename = "";
+
+        @Parameter(names = {"-c", "--code", "-code"}, required =  false, description = "Media code")
+        public String mediaCode = "";
+
+        @Parameter(names = {"-mf", "--media-format", "-media-format"}, required =  false, description = "Media format")
+        public String mediaFormat = "";
+
+        @Parameter(names = {"-amf", "-all-mf", "--all-media-formats", "-all-media-formats"}, required =  false, description = "All media formats")
+        public boolean allMediaFormats = false;
+
+        @Parameter(names = {"-a", "-all-m", "--all-medias", "-all-medias"}, required =  false, description = "All medias")
+        public boolean allmedias = false;
+
+        @Parameter(names = {"-mt", "-media-type", "--media-type", "-mediatype"}, required =  false, description = "MediaType (Media, BarcodeMedia. CatalogUnawareMedia, CatalogVersionSyncScheduleMedia, ConfigurationMedia, Document, EmailAttachment,Formatter, ImpExMedia, JasperMedia, LDIFMedia, LogFile, ScriptMedia)")
+        public String mediaType = "Media";
+
+
     }
 
     public static void main(String[] args) throws IOException, InterruptedException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException {
 
         String pn = "HybrisMedia";
-        HybrisImpex.JCommanderCmd jct = new HybrisImpex.JCommanderCmd();
+        JCommanderCmd jct = new JCommanderCmd();
         try {
             new JCommander(jct, args);
 
@@ -44,8 +62,34 @@ public class HybrisMedia {
             return;
         }
 
-        String fileToUpload = "C:\\hybris\\h61\\hybris\\bin\\custom\\hybristoolsclient\\console\\data\\sample.impex";
-        String URL = Conf.getWebRoot()+"tools/media/create?type=asdasd";
+        if (jct.allMediaFormats) {
+            System.out.println(HttpRequest.execute(Conf.getWebRoot()+"tools/media/mediaformats", "", "", HttpMethodsEnum.GET));
+            return;
+        }
+
+        if (jct.allmedias) {
+            //filename is empty: show all medias
+            System.out.println(HttpRequest.execute(Conf.getWebRoot()+"tools/media/medias", "", "", HttpMethodsEnum.GET));
+            return;
+        }
+
+
+        String fileToUpload = jct.filename;
+        if (fileToUpload.equals(""))
+        {
+            CommonUtils.getHelp(jct, pn);
+            return ;
+        }
+        String URL = Conf.getWebRoot()+"tools/media/create?"+
+                String.join("&",
+                        Arrays.asList(
+                                  String.join("=", CommonUtils.getParam("code", jct.mediaCode)),
+                                  String.join("=", CommonUtils.getParam("filename", jct.filename)),
+                                  String.join("=", CommonUtils.getParam("mediaFormat", jct.mediaFormat)),
+                                  String.join("=", CommonUtils.getParam("mediaCode", jct.mediaCode)),
+                                  String.join("=", CommonUtils.getParam("mediaType", jct.mediaType))
+                                )
+                );
         System.out.println(HttpRequest.uploadFileToHybris(fileToUpload, URL));
     }
 

@@ -1,0 +1,3 @@
+language                                         , Language                                                         ,  , [UNIQ], [o] 
+source                                           , AbstractConstraint                                               ,  , [UNIQ], [!] 
+target                                           , ConstraintGroup                                                  ,  , [UNIQ], [!] 

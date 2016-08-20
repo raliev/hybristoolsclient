@@ -1,0 +1,5 @@
+language                          , Language                                                         ,  , [UNIQ], [o] 
+product                           , Product                                                          ,  , [UNIQ], [!] 
+qualifier                         , java.lang.String                                                 ,  , [UNIQ], [!] 
+unit                              , ClassificationAttributeUnit                                      ,  , [UNIQ], [o] 
+valuePosition                     , java.lang.Integer                                                ,  , [UNIQ], [o] 
