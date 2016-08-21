@@ -45,6 +45,8 @@ public class HybrisFlexibleSearch  {
         public int maxResults = 1000000;
         @Parameter(names = {"-b", "-beatify", "--beautify" })
         public boolean beautify = false;
+        @Parameter(names = {"-r", "-resultTypes", "--resultTypes", "-result-types", "--result-types" }, description = "result types, column by column")
+        public String resultTypes = "";
         @Parameter(names = {"-pk"})
         public String pk = "";
 
@@ -90,8 +92,10 @@ public class HybrisFlexibleSearch  {
                                                                 String.join("=", CommonUtils.getParam("maxResults", jct.maxResults+"")),
                                                                 String.join("=", CommonUtils.getParam("ref", jct.ref)),
                                                                 String.join("=", CommonUtils.getParam("beautify", jct.beautify ? "true" : "false")),
-                                                                String.join("=", CommonUtils.getParam("pk", jct.pk)
-                                                                )
+                                                                String.join("=", CommonUtils.getParam("pk", jct.pk)),
+                                                                String.join("=", CommonUtils.getParam("resultTypes", jct.resultTypes)
+
+                                                                        )
                                                 )
                                         ),
                                 "",

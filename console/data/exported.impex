@@ -1,0 +1,44 @@
+INSERT_UPDATE SolrIndexedProperty;solrIndexedType(identifier)[unique=true];name[unique=true];type(code);localized[default=true];multiValue[default=false];fieldValueProvider;classAttributeAssignment(classificationClass(code,catalogVersion(catalog(id[default='ElectronicsClassification']),version[default='1.0'])),classificationAttribute(code,systemVersion(catalog(id[default='ElectronicsClassification']),version[default='1.0'])),systemVersion(catalog(id[default='ElectronicsClassification']),version[default='1.0']))
+electronicsProductType;Colour of product, 1766;string;true;false;commerceClassificationPropertyValueProvider;3856:ElectronicsClassification:1.0:Colour of product, 1766:ElectronicsClassification:1.0:ElectronicsClassification:1.0
+electronicsProductType;Lens type, 472;string;true;true;classificationPropertySplitValueProvider;1094:ElectronicsClassification:1.0:Lens type, 472:ElectronicsClassification:1.0:ElectronicsClassification:1.0
+electronicsProductType;Megapixel, 63;double;false;false;commerceClassificationPropertyValueProvider;57:ElectronicsClassification:1.0:Megapixel, 63:ElectronicsClassification:1.0:ElectronicsClassification:1.0
+electronicsProductType;Mounting, 1867;string;true;false;commerceClassificationPropertyValueProvider;634:ElectronicsClassification:1.0:Mounting, 1867:ElectronicsClassification:1.0:ElectronicsClassification:1.0
+electronicsProductType;Resolution, 80;string;false;false;commerceClassificationPropertyValueProvider;631:ElectronicsClassification:1.0:Resolution, 80:ElectronicsClassification:1.0:ElectronicsClassification:1.0
+electronicsProductType;allCategories;string;false;true;categoryCodeValueProvider;
+electronicsProductType;allPromotions;string;false;true;promotionCodeValueProvider;
+electronicsProductType;availableInStores;string;false;true;productStoreStockValueProvider;
+electronicsProductType;brand;string;false;true;electronicsBrandCategoryCodeValueProvider;
+electronicsProductType;brandName;text;true;true;electronicsBrandCategoryNameValueProvider;
+electronicsProductType;category;string;false;true;electronicsCategoryCodeValueProvider;
+electronicsProductType;categoryName;text;true;true;electronicsCategoryNameValueProvider;
+electronicsProductType;categoryPath;string;false;true;categoryPathValueProvider;
+electronicsProductType;code;string;false;false;springELValueProvider;
+electronicsProductType;configurable;boolean;false;false;productConfigurableProvider;
+electronicsProductType;description;text;true;false;;
+electronicsProductType;ean;string;false;false;;
+electronicsProductType;feature-aperture;text;true;false;commerceClassificationPropertyValueProvider;622:ElectronicsClassification:1.0:Aperture setting, 5775:ElectronicsClassification:1.0:ElectronicsClassification:1.0
+electronicsProductType;feature-display;text;true;false;commerceClassificationPropertyValueProvider;41:ElectronicsClassification:1.0:Display, 83:ElectronicsClassification:1.0:ElectronicsClassification:1.0
+electronicsProductType;feature-memCards;text;true;false;commerceClassificationPropertyValueProvider;42:ElectronicsClassification:1.0:Compatible memory cards, 730:ElectronicsClassification:1.0:ElectronicsClassification:1.0
+electronicsProductType;feature-picMode;text;true;true;commerceClassificationPropertyValueProvider;622:ElectronicsClassification:1.0:Picture mode, 2030:ElectronicsClassification:1.0:ElectronicsClassification:1.0
+electronicsProductType;feature-size;text;true;false;commerceClassificationPropertyValueProvider;622:ElectronicsClassification:1.0:Size, 1147:ElectronicsClassification:1.0:ElectronicsClassification:1.0
+electronicsProductType;feature-videoCap;text;true;false;commerceClassificationPropertyValueProvider;622:ElectronicsClassification:1.0:Video memory capacity, 5167:ElectronicsClassification:1.0:ElectronicsClassification:1.0
+electronicsProductType;img-300Wx300H;string;false;false;image300ValueProvider;
+electronicsProductType;img-30Wx30H;string;false;false;image30ValueProvider;
+electronicsProductType;img-515Wx515H;string;false;false;image515ValueProvider;
+electronicsProductType;img-65Wx65H;string;false;false;image65ValueProvider;
+electronicsProductType;img-96Wx96H;string;false;false;image96ValueProvider;
+electronicsProductType;inStockFlag;boolean;false;false;productInStockFlagValueProvider;
+electronicsProductType;itemtype;string;false;false;;
+electronicsProductType;keywords;text;true;false;productKeywordsValueProvider;
+electronicsProductType;manufacturerAID;string;false;false;;
+electronicsProductType;manufacturerName;text;false;false;;
+electronicsProductType;name;text;true;false;springELValueProvider;
+electronicsProductType;pickupAvailableFlag;boolean;false;false;productPickupAvailabilityValueProvider;
+electronicsProductType;price;double;false;false;productPriceValueProvider;
+electronicsProductType;priceValue;double;false;false;productPriceValueProvider;
+electronicsProductType;primaryPromotionBanner;string;false;false;promotionImageValueProvider;
+electronicsProductType;primaryPromotionCode;string;false;false;promotionCodeValueProvider;
+electronicsProductType;reviewAvgRating;double;true;false;productReviewAverageRatingValueProvider;
+electronicsProductType;stockLevelStatus;string;false;false;productStockLevelStatusValueProvider;
+electronicsProductType;summary;text;true;false;;
+electronicsProductType;url;string;true;false;productUrlValueProvider;

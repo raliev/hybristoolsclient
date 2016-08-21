@@ -1,3 +1,5 @@
+./hybrisFlexibleSearch.sh -b "select count({code}),{C:id},{CV:version} from {Media as c}, {CatalogVersion as CV}, {Catalog as C} where {catalogversion}={CV:PK} AND {CV:catalog}={C:PK} AND ({C:id}='china' and {CV:version} like '%Test%') and {pk} IN ({{
+ select {target} from {Product2MediaRelation} }})"
 ./hybrisFlexibleSearch.sh -q "select {pk} from {Product}" > testresults/flexiblesearch/allProducts.tsv
 ./hybrisFlexibleSearch.sh -i Product > testresults/flexiblesearch/allProducts.tsv
 ./hybrisFlexibleSearch.sh -i Product -of CSV > testresults/flexiblesearch/allProducts.csv

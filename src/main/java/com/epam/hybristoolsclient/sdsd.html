@@ -1,0 +1,453 @@
+<h1 id="HybrisConsole/APIRuntimeDeveloperTools-Overview">Overview</h1>
+In one of my previous articles I announced my new project, <strong>hybris  Runtime Development tools.</strong> This post is about some important updates to the package.
+
+Hybris Runtime Development tools is a set of the web/command-line utilities for hybris developers to progress faster with the everyday tasks and troubleshooting. Each utility is available both as a command-line application and as an API interface. So you can combine these components freely with your own toolset, both web-based and standalone.
+
+<img class="alignnone size-full wp-image-1703" src="https://hybrismart.files.wordpress.com/2016/08/commandlinetools.png" alt="commandlinetools" width="1221" height="566" />
+
+The updates are marked with <span style="color: #ff0000;">(NEW!)</span>
+<ul>
+    <li><strong><a href="https://hybrismart.com/2016/08/18/hybrisflexiblesearch-command-line-tool-web-api">hybrisFlexibleSearch</a> (100% ready)</strong>
+        <ul>
+            <li>REST API and a console tool to FlexibleSearchService,</li>
+            <li>FlexibleSearch command-line interface,</li>
+            <li>Various output formats, such as TXT, TSV, CSV, XML,</li>
+            <li>Using pipes and filters (grep, awk, perl etc),</li>
+            <li>Cascade reference resolution (no more PK is in output),</li>
+            <li>Handy for testing and troubleshooting</li>
+            <li><span style="color: #993300;"><em><strong>NEW!</strong> <a href="#searchbypk">Search by PK</a>. No need to specify a type, just a PK.</em></span></li>
+            <li><span style="color: #993300;"><em><strong>NEW!</strong> <a href="#beautifier">FlexibleSearch built-in beautifier</a> (reformatter) </em></span></li>
+            <li><span style="color: #993300;"><em><strong>NEW!</strong> <a href="#supportingaregistry">Supporting a registry</a> of hybris types without unique fields for proper resolution (see below)</em></span></li>
+            <li><span style="color: #993300;"><em><strong>NEW!</strong> <a href="#mixingtypes">Mixing types in Select</a> is available now</em></span></li>
+        </ul>
+    </li>
+</ul>
+<ul>
+    <li><strong><a href="https://hybrismart.com/2016/08/18/hybris-type-system-command-line-tool-web-api/">hybrisTypeSystem<strong> </strong></a><strong>(100% ready)</strong></strong>
+        <ul>
+            <li>REST API and a console tool to the type system,</li>
+            <li>Shows all available types,</li>
+            <li>Shows the detailed information about the type,</li>
+            <li>Shows the detailed information about the type attribute.</li>
+            <li><em><span style="color: #993300;"><strong>NEW!</strong> <a href="#supportingcollectiontypes">Supporting collection types</span></em></li>
+            <li><em><span style="color: #993300;"><strong>NEW!</strong> <a href="#typesearchbypk">Search a type of the item by it's PK</span></em></li>
+        </ul>
+    </li>
+</ul>
+<ul>
+    <li><strong><a href="https://hybrismart.com/2016/08/18/hybris-beans-command-line-tool-web-api/">hybrisBeans<strong> </strong></a><strong>(100% ready)</strong></strong>
+        <ul>
+            <li>REST API and console tool with the common configuration,</li>
+            <li>Shows the information about the specific bean,</li>
+            <li>Changing bean values (!) on the fly.</li>
+        </ul>
+    </li>
+</ul>
+<ul>
+    <li><strong>hybrisImpex<strong> (100% ready) <em><span style="color: #993300;"><strong>NEW! </strong></span></em></strong></strong>
+        <ul>
+            <li><em><span style="color: #993300;">REST API and console tool with the common configuration</span></em></li>
+            <li><em><span style="color: #993300;"><strong>NEW! </strong><a href="#hybrisbeautifier">impex beautifier</a> (reformatter) <strong>NEW!</strong></span></em></li>
+            <li><em><span style="color: #993300;"><strong>NEW! </strong><a href="#executingimpexes1">executing impexes from files</a> (HAC-like mode)</span></em></li>
+            <li><em><span style="color: #993300;"><strong>NEW! </strong><a href="#executingimpexes1">executing impexes from Media</a> (HMC-like mode)</span></em></li>
+        </ul>
+    </li>
+</ul>
+<ul>
+    <li><strong>hybrisMedia (100% ready) <span style="color: #ff0000;">NEW!</span></strong>
+        <ul>
+            <li><span style="color: #993300;"><em><strong>NEW! </strong>REST API and console interface to Media resources</em></span></li>
+            <li><span style="color: #993300;"><em><strong>NEW! </strong>uploading media files by media code</em></span></li>
+        </ul>
+    </li>
+</ul>
+<ul>
+    <li><strong>hybrisConfiguration (100% ready)  <span style="color: #ff0000;">NEW!</span></strong>
+        <ul>
+            <li><em><span style="color: #993300;"><strong>NEW! </strong>all configuration parameters with values</span></em></li>
+            <li><em><span style="color: #993300;"><strong>NEW! </strong>changing configuration parameters (key/value)</span></em></li>
+            <li><em><span style="color: #993300;"><strong>NEW! </strong>syncronization configuration parameters in memory with configuration files</span></em></li>
+        </ul>
+    </li>
+</ul>
+<ul>
+    <li><strong><span style="color: #808080;">hybrisGroovy<strong> (0%)</strong></span></strong>
+        <ul>
+            <li><span style="color: #808080;">executing groovy scripts</span></li>
+        </ul>
+    </li>
+    <li><span style="color: #808080;"><strong>hybrisCronjob<strong> (0%)</strong></strong></span>
+        <ul>
+            <li>REST API and console interface to Cronjobs</li>
+            <li>Starting / stopping cronjobs</li>
+            <li>Changing cronjob attributes</li>
+        </ul>
+    </li>
+    <li><span style="color: #808080;"><strong>hybrisSession<strong> (0%)</strong></strong></span>
+        <ul>
+            <li><span style="color: #808080;">REST API and console interface to sessions</span></li>
+            <li><span style="color: #808080;">Changing session attributes</span></li>
+        </ul>
+    </li>
+    <li><span style="color: #808080;"><strong>hybrisUsers (0%)</strong></span>
+        <ul>
+            <li><span style="color: #808080;">REST API and console interface to the user and customer service</span></li>
+            <li><span style="color: #808080;">sets up a current user by login</span></li>
+            <li><span style="color: #808080;">change user-related runtime information</span></li>
+        </ul>
+    </li>
+    <li><span style="color: #808080;"><strong>hybrisLog<strong> (0%)</strong></strong></span>
+        <ul>
+            <li><span style="color: #808080;">log parsing operations</span></li>
+            <li>activating/deactivating debug mode for classes</li>
+            <li><span style="color: #808080;">hooks for flexible search requests and </span>solr<span style="color: #808080;"> requests</span></li>
+        </ul>
+    </li>
+    <li><span style="color: #808080;"><strong>hybrisSOLR<strong> (0%)</strong></strong></span>
+        <ul>
+            <li>REST API and console interface to SOLR search and SOLR indexer</li>
+            <li><span style="color: #808080;">start/stop index</span></li>
+            <li>request for SOLR data</li>
+        </ul>
+        <ul>
+            <li><span style="color: #808080;">REST API and console tool with the common configuration</span></li>
+            <li><span style="color: #808080;">Execute groovy scripts easily</span></li>
+        </ul>
+    </li>
+    <li><span style="color: #808080;"><strong>hybrisPWS (0%)</strong></span>
+        <ul>
+            <li><span style="color: #808080;">console interface to Platform Web Services</span></li>
+        </ul>
+    </li>
+</ul>
+See details about the updates in forthcoming  publications.
+<h2>hybrisFlexibleSearch</h2>
+Please refer to the previous post to see the basic capabilities. This utility is designed for perfoming FlexibleSearch requests from the command line.
+
+Major updates are the following:
+<ul>
+    <li><span style="color: #993300;"><em><strong>NEW!</strong> <a href="#searchbypk">Search by PK</a>. No need to specify a type, just a PK.</em></span></li>
+    <li><span style="color: #993300;"><em><strong>NEW!</strong> FlexibleSearch <a href="#beautifier">built-in beautifier</a> (reformatter) </em></span></li>
+    <li><span style="color: #993300;"><em><strong>NEW!</strong> <a href="#supportingaregistry">Supporting a registry of hybris types without unique fields</a> for proper resolution (see below)</em></span></li>
+    <li><span style="color: #993300;"><em><strong>NEW!</strong> <a href="#mixingtypes">Mixing types in Select</a> is available now</em></span></li>
+</ul>
+<h3 id="searchbypk">Search by PK</h3>
+If you have a PK of any object in hybris, you can see a detailed information about this object. It is not required now to know what type this object has.
+<pre>$ ./hybrisFlexibleSearch.sh -pk 8796176187393
+catalogVersion code
+electronicsProductCatalog:Online 4135570
+
+$ ./hybrisFlexibleSearch.sh -pk 8796093120544
+isocode
+es</pre>
+&nbsp;
+
+For the API version of this feature a new URL parameter "pk" is introduced.
+<h3 id="beautifier">Flexible Search reformatter</h3>
+<img class="alignnone size-full wp-image-1775" src="https://hybrismart.files.wordpress.com/2016/08/2016-08-20_16h44_32.png" alt="2016-08-20_16h44_32" width="622" height="502" />
+
+For the API version of this feature a new URL parameter "beautify" is introduced (boolean).
+<h3 id="registryofhybris">Registry of hybris types without unique fields</h3>
+This feature is about the PK resolution. In hybris, the response from FlexibleSearch service contains java objects. However, for exporting data you need to convert these objects into text. For atomic types like String or Integer, the conversion is automatic.
+
+The hybris default Flexible Search viewer can't resolve the references and you need to rewrite your queries. For example, this is what a typical response looks like in HAC:
+
+<img class="alignnone size-full wp-image-1776" src="https://hybrismart.files.wordpress.com/2016/08/2016-08-20_16h49_59.png" alt="2016-08-20_16h49_59.png" width="744" height="392" />
+
+All reference links, all collections and all maps are "encoded" (each in his or her own way).
+
+My flexible search console application accomplishes this task by cascade resolution. For the example above, my application in response to the flexible search request "select {pk}, {normal} from {Product}" will return the following:
+<pre>$ ./hybrisFlexibleSearch.sh -q "Select {pk} from {Product}" -f "pk,normal" -mr 4
+pk normal
+8796167176193 (electronicsProductCatalog:Online:/300Wx300H/266899-5310.jpg)
+8796167340033 (electronicsProductCatalog:Online:/300Wx300H/284533-9485.jpg)
+8796167372801 (electronicsProductCatalog:Online:/300Wx300H/107701-5509.jpg)</pre>
+normal is a collection of Media, so this is a reason why the value is in parentheses. In my example, there is only one item in the list. This item is of Media type. According to the configuration of the utility, Media has two keys, catalogVersion and code. The other utility, hybrisTypeSystem helps to see it easily:
+<pre>$ ./hybrisTypeSystem.sh -t Media | grep UNIQ
+catalogVersion CatalogVersion [UNIQ], [!]
+code java.lang.String [UNIQ], [!]</pre>
+Code is an atomic type. In the example above  /300Wx300H/266899-5310.jpg is a code of the item with pk=8796167176193. Why do we see three components rather than two? It is because the first component, CatalogVersion, is also a composed type and my utility performs an additional request to resolve it into Catalog and catalogVersion. Both catalog and catalogVersions are also composed types, and the system retrieves their unique codes.
+
+<img class="alignnone size-full wp-image-1777" src="https://hybrismart.files.wordpress.com/2016/08/flexible.png" alt="flexible" width="1068" height="460" />
+
+What rules are used for the resolution? For the example above, how the system understands that Media should be resolved into CatalogVersion+Code? that CatalogVersion should be resolved into Catalog + Version? and that Catalog should be resolved into Id?
+
+The rules are simple:
+<ul>
+    <li>If the type has unique fields, they are used for the resolution</li>
+    <li>If the type has no unique fields, manual rules are used.</li>
+</ul>
+However, there too many types that have no unique fields, namely 452 in hybris 6.1. There is a list of these types in the updated version of the application, <em>types-without-uniq-fields.txt</em>. The format of this file is simple:
+<pre>AbstractAdvancedSavedQuerySearchParameter:pk
+AbstractComment:pk
+...
+WorkflowTemplateActionTemplateRelation:pk</pre>
+Each line is a rule. The rule X:Y1,Y2,Y3 says that the type X should be resolved in the fields Y1,Y2,Y3. Most of the rules have only pk on the right side. I changed some of the frequently used types from this list to my convenient rules. The rule for PriceRow type:
+<pre>PriceRow:currency,price</pre>
+If you try to see the price of the Product, the price will be resolved according to this rule:
+<pre>$ ./hybrisFlexibleSearch.sh -q "select {pk} from {PriceRow}" -mr 1
+currency price
+JPY 3030.0</pre>
+<h3 id="mixingtypes">Mixing type in SELECTs and joins</h3>
+In the first release of hybrisFlexibleSearch, there were any capabilities to request more than one object out from the request. The PK of this object is the first component of "select" query. For example, "select {pk} from {Product}" returns a set of objects of Product type. However, if you wanted to show prices along with the product, the previous version of hybrisFlexibleSearch wasn't able to do so.
+
+I added this feature into the new version of hybrisFlexibleSearch. Now you are able to process requests like
+<pre>select
+     {pk}, {PriceRow}
+ from
+     {Product},
+     {PriceRow}
+ where
+     {PriceRow.ProductId}={Product.code}</pre>
+<em>(Instead of </em>
+<pre><em>./hybrisFlexibleSearch.sh -q "select {pk} from {Product}" -f code,europe1Prices </em></pre>
+<em>that have been available in the previous version)</em>
+
+However, there is a issue with the type resolution from the attributes in the response. For example, for the flexible request above, {PriceRow} is hybris' PriceRow type and hybris flexiblesearch engine is not capable to identify this type without any clues. In the new version of the utility there is an command line option named resultTypes (-r for short) that is designed to show the types of the resulting set. Compare the output with and without this option:
+
+Without resultTypes:
+<pre>$ ./hybrisFlexibleSearch.sh -q "select {pk}, {PriceRow.pk} from {Product}, {PriceRow} where {PriceRow.ProductId}={Product.code}" -mr 5
+catalogVersion code
+electronicsProductCatalog:Online 266899 8796093088799
+electronicsProductCatalog:Online 266899 8796093252639
+electronicsProductCatalog:Online 65652 8796096201759
+electronicsProductCatalog:Online 65652 8796096300063
+electronicsProductCatalog:Online 284533 8796098200607</pre>
+With resultTypes:
+<pre>$ ./hybrisFlexibleSearch.sh -q "select {pk}, {PriceRow.pk} from {Product}, {PriceRow} where {PriceRow.ProductId}={Product.code}" -mr 5 -r Item,PriceRow
+catalogVersion code
+electronicsProductCatalog:Online 266899 USD:86.86
+electronicsProductCatalog:Online 266899 JPY:7400.0
+electronicsProductCatalog:Online 65652 USD:358.88
+electronicsProductCatalog:Online 65652 JPY:30570.0
+electronicsProductCatalog:Online 284533 USD:419.43</pre>
+By default, the type of fields in the SELECT part is "String". So resultTypes will help you to convert the PKs from this list into the human-readable form.
+
+For the API version of this feature a new URL parameter "resultTypes" is introduced.
+<h2>hybrisTypeSystem</h2>
+Please refer to the previous post to see the basic capabilities. This utility is designed for requesting the information about the hybris types.
+<h3>Features</h3>
+<ul>
+    <li><em><span style="color: #993300;"><strong>NEW!</strong> <a href="#supportingcollectiontypes">Supporting collection types</span></em></li>
+    <li><em><span style="color: #993300;"><strong>NEW!</strong> <a href="#typesearchbypk">Search a type of the item by it's PK</span></em></li>
+</ul>
+<h3 id="supportingcollectiontypes">Supporting collection types</h3>
+<pre>$ ./hybrisTypeSystem.sh -t CommentItemRelationcommentsColl
+The Element of collection (type): Comment
+Code: CommentItemRelationcommentsColl
+Extension name: comments
+Description: null
+XML definition: &lt;collectiontype code=CommentItemRelationcommentsColl elementtype="Comment autocreate="false generate="false/&gt;</pre>
+<h3>Search a item type by pk</h3>
+Now also can find a type by PK (in the similar way <a href="#searchbypk">as described above</a>.
+<pre>$ ./hybrisTypeSystem.sh -pk 8796176187393
+Product</pre>
+<h2>hybrisImpex</h2>
+<h3>Features</h3>
+<ul>
+    <li><em><span style="color: #993300;">REST API and console tool with the common configuration</span></em></li>
+    <li><em><span style="color: #993300;"><strong>NEW! </strong><a href="#hybrisbeautifier">impex beautifier</a> (reformatter) <strong>NEW!</strong></span></em></li>
+    <li><em><span style="color: #993300;"><strong>NEW! </strong><a href="#executingimpexes1">executing impexes from files</a> (HAC-like mode)</span></em></li>
+    <li><em><span style="color: #993300;"><strong>NEW! </strong><a href="#executingimpexes2">executing impexes from Media</a> (HMC-like mode)</span></em></li>
+</ul>
+<h3 id="HybrisConsole/APIRuntimeDeveloperTools-API.3">Command-line interface</h3>
+The command-line app is a console wrapper for API. See API for the details.
+
+Usage:
+<pre>./hybrisImpex.sh -i file1.impex file2.impex
+./hybrisImpex.sh -i folder/*
+./hybrisImpex.sh -c <em>&lt;mediaCode&gt;</em></pre>
+For the last example you need to upload an Impex File to Media storage using the following command
+<pre>./hybrisMedia -c <em>&lt;mediaCode&gt; -</em>i &lt;impexFile&gt; -mt ImpExMedia</pre>
+<h3 id="HybrisConsole/APIRuntimeDeveloperTools-Parameters.2">Parameters</h3>
+<div class="table-wrap">
+    <table class="confluenceTable">
+        <tbody>
+        <tr>
+            <td class="confluenceTd"><strong>parameter</strong></td>
+            <td class="confluenceTd"><strong> Description</strong></td>
+            <td class="confluenceTd"><strong>Example</strong></td>
+        </tr>
+        <tr>
+            <td class="confluenceTd" colspan="1">-<strong>?</strong></td>
+            <td class="confluenceTd" colspan="1">help, available options. Only for the console version.</td>
+            <td class="confluenceTd" colspan="1"></td>
+        </tr>
+        <tr>
+            <td class="confluenceTd"><strong>beautify (-b)</strong></td>
+            <td class="confluenceTd">Reformats the impex file. All other commands are ignored</td>
+            <td class="confluenceTd">-b</td>
+        </tr>
+        <tr>
+            <td class="confluenceTd"><strong>legacy (-l)</strong></td>
+            <td class="confluenceTd">legacy mode on. Default value is false</td>
+            <td class="confluenceTd">-l</td>
+        </tr>
+        <tr>
+            <td class="confluenceTd" colspan="1"><strong>maxThreads (-mt)</strong></td>
+            <td class="confluenceTd" colspan="1">Maximum number of threads. By default, 16 threads.</td>
+            <td class="confluenceTd" colspan="1"> -mt 16</td>
+        </tr>
+        <tr>
+            <td class="confluenceTd" colspan="1"><strong>validationMode (-mode)</strong></td>
+            <td class="confluenceTd" colspan="1">Validaton mode (strict/relaxed). Default value is strict.</td>
+            <td class="confluenceTd" colspan="1"> -mode=strict</td>
+        </tr>
+        <tr>
+            <td class="confluenceTd" colspan="1"><strong>codeExec (-ce)</strong></td>
+            <td class="confluenceTd" colspan="1">Enable code execution. By default it is disabled</td>
+            <td class="confluenceTd" colspan="1"> -ce</td>
+        </tr>
+        <tr>
+            <td class="confluenceTd" colspan="1"><strong>mediaCode (-mc)</strong></td>
+            <td class="confluenceTd" colspan="1">the code of the media of ImpExMedia type to import. At first you need to upload the impex as a media object with this code</td>
+            <td class="confluenceTd" colspan="1"> -mt 16</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<h2>Examples</h2>
+<h3 id="hybrisbeautifier">Reformatter (beautifier)</h3>
+<pre>./hybrisImpex.sh  -b data/products-classifications_en.impex</pre>
+<img class="alignnone size-full wp-image-1773" src="https://hybrismart.files.wordpress.com/2016/08/2016-08-20_15h54_10.png" alt="2016-08-20_15h54_10.png" width="993" height="805" />
+
+<h3 id="executingimpexes1">Executing impexes</h3>
+There are two options on how to execute impexes: to load the impex file directly to the hybris Runtime Development tool server and execute there or to upload it as a media (using tools or not) and execute the impex file by the reference to the media.
+<h2>hybrisMedia</h2>
+It is a new utility for uploading media to the system directly from the command line.
+<h3>Features</h3>
+<ul>
+    <li><span style="color: #993300;"><em><strong>NEW! </strong>REST API and console interface to Media resources</em></span></li>
+    <li><span style="color: #993300;"><em><strong>NEW! </strong>uploading media files by media code</em></span></li>
+</ul>
+<h3>Console</h3>
+All medias (it is a long list)
+<pre>./hybrisMedia.sh -am</pre>
+All media formats (to use with -mt option)
+<pre>./hybrisMedia.sh -amf</pre>
+Uploading a file, creating an item of Media type in hybris:
+
+<pre>./hybrisMedia.sh -c <em>&lt;mediaCode&gt;</em> -i <em>&lt;file name&gt;</em> -mt Media</pre>
+
+Uploading an Impex file. It can be processed later with hybrisImpex utility
+
+<pre>./hybrisMedia.sh -c testImpex -i data/sample.impex -mt ImpExMedia</pre>
+
+<h3 id="HybrisConsole/APIRuntimeDeveloperTools-Parameters.2">Parameters</h3>
+<div class="table-wrap">
+    <table class="confluenceTable">
+        <tbody>
+        <tr>
+            <td class="confluenceTd"><strong>parameter</strong></td>
+            <td class="confluenceTd"><strong> Description</strong></td>
+            <td class="confluenceTd"><strong>Example</strong></td>
+        </tr>
+        <tr>
+            <td class="confluenceTd" colspan="1">-<strong>?</strong></td>
+            <td class="confluenceTd" colspan="1">help, available options. Only for the console version.</td>
+            <td class="confluenceTd" colspan="1"></td>
+        </tr>
+        <tr>
+            <td class="confluenceTd"><strong>-all-medias (-a)</strong></td>
+            <td class="confluenceTd">The plain list of all media items (code)</td>
+            <td class="confluenceTd">-a</td>
+        </tr>
+        <tr>
+            <td class="confluenceTd"><strong>-all-media-formats(-amf)</strong></td>
+            <td class="confluenceTd">Displays all media formats</td>
+            <td class="confluenceTd">-amf</td>
+        </tr>
+        <tr>
+            <td class="confluenceTd" colspan="1"><strong>mediaFormat (-mf)</strong></td>
+            <td class="confluenceTd" colspan="1">Specifies the media format</td>
+            <td class="confluenceTd" colspan="1"> -mf 300Wx300H</td>
+        </tr>
+        <tr>
+            <td class="confluenceTd" colspan="1"><b>mediaType (-mt)</b></td>
+            <td class="confluenceTd" colspan="1">Media type of a newly created item. The following media types are available OOTB:  Media, BarcodeMedia. CatalogUnawareMedia,
+                CatalogVersionSyncScheduleMedia, ConfigurationMedia, Document, EmailAttachment,Formatter, ImpExMedia,
+                JasperMedia, LDIFMedia, LogFile, ScriptMedia</td>
+            <td class="confluenceTd" colspan="1"> -mt ImpExMedia</td>
+        </tr>
+        <tr>
+            <td class="confluenceTd" colspan="1"><strong>code (-c)</strong></td>
+            <td class="confluenceTd" colspan="1">Code of a newly created item</td>
+            <td class="confluenceTd" colspan="1"> -c</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<h2>hybrisConfiguration</h2>
+<p>This utility is designed for runtime configuration management. Basically, all the capabilities are available also in HAC, the Configuration tab, except the sync feature.</p>
+<h3>Logging</h3>
+You are able to see hybris logs in the tool's output:
+<pre>
+<b>$ ./hybrisImpex.sh -i data/products.impex</b>
+[READING IMPEX] data/products.impex
+INFO   | jvm 2    | main    | 2016/08/21 14:06:21.580 | INFO  [hybrisHTTP5] [DefaultImportService] Starting import synchronous using cronjob with code=00000G7D
+INFO   | jvm 2    | main    | 2016/08/21 14:06:21.585 | INFO  [hybrisHTTP5] (00000G7D) [ImpExImportJob] Starting multi-threaded ImpEx cronjob "ImpEx-Import" (16 threads)
+INFO   | jvm 2    | main    | 2016/08/21 14:06:21.621 | WARN  [ImpExReaderWorker] [ImpExReader] line 2 at main script: skipped code line line 2 at main script:impex.setLocale( Locale.GERMAN ) since bean shell is not enabled
+INFO   | jvm 2    | main    | 2016/08/21 14:06:26.943 | INFO  [hybrisHTTP5] (00000G7D) [Importer] Finished 1 pass in 0d 00h:00m:05s:354ms - processed: 1954, no lines dumped (last pass 0)
+INFO   | jvm 2    | main    | 2016/08/21 14:06:27.050 | INFO  [hybrisHTTP5] [DefaultImportService] Import was successful (using cronjob with code=00000G7D)
+Status: SUCCESSFUL</pre>
+
+<h3 id="HybrisConsole/APIRuntimeDeveloperTools-Parameters.2">Parameters</h3>
+<div class="table-wrap">
+    <table class="confluenceTable">
+        <tbody>
+        <tr>
+            <td class="confluenceTd"><strong>parameter</strong></td>
+            <td class="confluenceTd"><strong> Description</strong></td>
+            <td class="confluenceTd"><strong>Example</strong></td>
+        </tr>
+        <tr>
+            <td class="confluenceTd" colspan="1">-<strong>?</strong></td>
+            <td class="confluenceTd" colspan="1">help, available options. Only for the console version.</td>
+            <td class="confluenceTd" colspan="1"></td>
+        </tr>
+        <tr>
+            <td class="confluenceTd"><strong>extension (-e)</strong></td>
+            <td class="confluenceTd">Extension name</td>
+            <td class="confluenceTd">-e trainingstorefront</td>
+        </tr>
+        <tr>
+            <td class="confluenceTd"><strong>name (-n)</strong></td>
+            <td class="confluenceTd">Name of the property to change</td>
+            <td class="confluenceTd">-n sso.redirect.url</td>
+        </tr>
+        <tr>
+            <td class="confluenceTd" colspan="1"><strong>value (-v)</strong></td>
+            <td class="confluenceTd" colspan="1">New value of the property</td>
+            <td class="confluenceTd" colspan="1"> -v "value value"</td>
+        </tr>
+        <tr>
+            <td class="confluenceTd" colspan="1"><b>list (-l)</b></td>
+            <td class="confluenceTd" colspan="1">All available configuration properties (not only for the specified extension)</td>
+            <td class="confluenceTd" colspan="1"> -l</td>
+        </tr>
+        <tr>
+            <td class="confluenceTd" colspan="1"><strong>check (-c)</strong></td>
+            <td class="confluenceTd" colspan="1">Compares property files with the memory state</td>
+            <td class="confluenceTd" colspan="1"> -c</td>
+        </tr>
+        <tr>
+            <td class="confluenceTd" colspan="1"><strong>sync (-s)</strong></td>
+            <td class="confluenceTd" colspan="1">Copy all new/update property values from files to memory</td>
+            <td class="confluenceTd" colspan="1"> -c</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<h3>Examples of usage</h3>
+Setting/creating/changing a configuration property:
+<pre>./hybrisConfiguration.sh -e hybristoolsclient -n test1 -v value1</pre>
+Find a value of the specific property:
+<pre>./hybrisConfiguration.sh -e hybristoolsclient -list | grep test1</pre>
+Scan the property files and compare them with the information in memory:
+<pre>./hybrisConfiguration.sh -e hybristoolsclient -check</pre>
+Sync the property files with the memory (one-way sync, only memory information will be changed)
+<pre>./hybrisConfiguration.sh -e hybristoolsclient -sync</pre>
+<h2>Download</h2>
+The extension is available by request. E-mail: <a href="mailto:Rauf_Aliev@epam.com">Rauf_Aliev@epam.com</a>. Skype: <a href="https://hybrismart.com/2016/08/18/hybrisflexiblesearch-command-line-tool-web-api/rauf_aliev?add">rauf_aliev</a>
+
+[contact-form][contact-field label="Name" type="name" required="1" /][contact-field label="Email" type="email" required="1" /][contact-field label="Comment" type="textarea" required="1" /][/contact-form]
