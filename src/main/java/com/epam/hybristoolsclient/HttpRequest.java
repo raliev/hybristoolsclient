@@ -74,6 +74,10 @@ public class HttpRequest {
     }
 
     public static String execute(String targetURL, String urlParameters, String postData, HttpMethodsEnum method) {
+        return execute(targetURL, urlParameters, postData, method, null);
+    }
+
+        public static String execute(String targetURL, String urlParameters, String postData, HttpMethodsEnum method, String writetofile) {
         HttpURLConnection connection = null;
 
         try {
@@ -120,10 +124,23 @@ public class HttpRequest {
             InputStream is = connection.getInputStream();
             BufferedReader rd = new BufferedReader(new InputStreamReader(is));
             StringBuilder response = new StringBuilder();
-            String line;
-            while ((line = rd.readLine()) != null) {
-                response.append(line);
-                response.append('\n');
+            if (writetofile != null && !writetofile.equals("")) {
+                File  f = new File (writetofile);
+                FileOutputStream fos = new FileOutputStream(f);
+                byte[] buffer = new byte[1024];
+                int bytesRead;
+
+                while ((bytesRead = is.read(buffer)) != -1) {
+                    fos.write(buffer, 0, bytesRead);
+                }
+                fos.flush();
+                is.close();
+            } else {
+                String line;
+                while ((line = rd.readLine()) != null) {
+                    response.append(line);
+                    response.append('\n');
+                }
             }
             rd.close();
             return response.toString();

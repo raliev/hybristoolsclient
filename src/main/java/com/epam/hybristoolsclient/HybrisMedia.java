@@ -43,16 +43,33 @@ public class HybrisMedia {
         @Parameter(names = {"-mt", "-media-type", "--media-type", "-mediatype"}, required =  false, description = "MediaType (Media, BarcodeMedia. CatalogUnawareMedia, CatalogVersionSyncScheduleMedia, ConfigurationMedia, Document, EmailAttachment,Formatter, ImpExMedia, JasperMedia, LDIFMedia, LogFile, ScriptMedia)")
         public String mediaType = "Media";
 
+        @Parameter(names = {"-d", "-download", "--download"}, required =  false, description = "Download the media(s)")
+        public boolean download;
+
+        @Parameter(names = {"-f", "-fields", "--fields"}, required =  false, description = "fields to display")
+        public String fields = "code,mediaContainer,mediaFormat";
+
+        @Parameter(names = {"-of", "-output-format", "--output-format", "-outputFormat", "--outputFormat"}, required =  false, description = "Output Format (CON, CSV, TSV, BRD)")
+        public String outputFormat = "CON";
+
+        @Parameter(names = {"-to-file", "--to-file", "--tofile", "-t"}, required =  false, description = "Output file (use with -d)")
+        public String outputFile = "";
+
+        @Parameter(names = {"-catalog", "--catalog"}, required =  false, description = "Catalog")
+        public String catalog = "";
+
+        @Parameter(names = {"-catalogVersion", "--catalogVerson", "-catalog-version", "--catalog-version"}, required =  false, description = "Catalog Version")
+        public String catalogVersion = "";
 
     }
 
     public static void main(String[] args) throws IOException, InterruptedException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException {
 
+
         String pn = "HybrisMedia";
         JCommanderCmd jct = new JCommanderCmd();
         try {
-            new JCommander(jct, args);
-
+            JCommander jc = new JCommander(jct, args);
         } catch (ParameterException e) {
             CommonUtils.getHelp(jct, pn);
             return;
@@ -73,24 +90,57 @@ public class HybrisMedia {
             return;
         }
 
-
-        String fileToUpload = jct.filename;
-        if (fileToUpload.equals(""))
-        {
-            CommonUtils.getHelp(jct, pn);
-            return ;
+        if (!jct.filename.equals("")) {
+            String URL = Conf.getWebRoot() + "tools/media/create?" +
+                    String.join("&",
+                            Arrays.asList(
+                                    String.join("=", CommonUtils.getParam("code", jct.mediaCode)),
+                                    String.join("=", CommonUtils.getParam("filename", jct.filename)),
+                                    String.join("=", CommonUtils.getParam("mediaFormat", jct.mediaFormat)),
+                                    String.join("=", CommonUtils.getParam("catalog", jct.catalog)),
+                                    String.join("=", CommonUtils.getParam("catalogVersion", jct.catalogVersion)),
+                                    String.join("=", CommonUtils.getParam("mediaCode", jct.mediaCode)),
+                                    String.join("=", CommonUtils.getParam("mediaType", jct.mediaType))
+                            )
+                    );
+            System.out.println(HttpRequest.uploadFileToHybris(jct.filename, URL));
         }
-        String URL = Conf.getWebRoot()+"tools/media/create?"+
-                String.join("&",
-                        Arrays.asList(
-                                  String.join("=", CommonUtils.getParam("code", jct.mediaCode)),
-                                  String.join("=", CommonUtils.getParam("filename", jct.filename)),
-                                  String.join("=", CommonUtils.getParam("mediaFormat", jct.mediaFormat)),
-                                  String.join("=", CommonUtils.getParam("mediaCode", jct.mediaCode)),
-                                  String.join("=", CommonUtils.getParam("mediaType", jct.mediaType))
-                                )
-                );
-        System.out.println(HttpRequest.uploadFileToHybris(fileToUpload, URL));
+        else
+        {
+
+            String response = HttpRequest.execute(Conf.getWebRoot()+"tools/media/medias?" +
+                            String.join("&",
+                                    Arrays.asList(
+                                            String.join("=", CommonUtils.getParam("code", jct.mediaCode)),
+                                            String.join("=", CommonUtils.getParam("outputFormat", jct.outputFormat)),
+                                            String.join("=", CommonUtils.getParam("catalog", jct.catalog)),
+                                            String.join("=", CommonUtils.getParam("catalogVersion", jct.catalogVersion)),
+                                            String.join("=", CommonUtils.getParam("download", jct.download ? "true" : "false")),
+                                            String.join("=", CommonUtils.getParam("fields", jct.fields))
+                                    )
+                            )
+                    , "", "", HttpMethodsEnum.GET,
+                    jct.outputFile
+                    );
+            if (jct.download) {
+
+                if (jct.outputFile.equals("")) {
+                    System.out.println(response);
+                } else
+                {
+                    System.out.println(jct.outputFile+" is created.");
+                }
+                return;
+            }
+            List<String> lines = Arrays.asList(response.split("\n"));
+            for (String line : lines)
+            {
+                List<String> columns = Arrays.asList(response.split("\t"));
+
+            }
+            System.out.println(response);
+        }
+
     }
 
 
