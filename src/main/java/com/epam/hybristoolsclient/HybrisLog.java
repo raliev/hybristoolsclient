@@ -18,7 +18,10 @@ public class HybrisLog {
 
     static class JCommanderCmd extends CommonCommands{
 
-        @Parameter(names = {"-l", "--list", "-list"}, required =  false, description = "List of classes and their log levels")
+        @Parameter(names = {"-a", "--all", "-all"}, required =  false, description = "All LogManager's classes")
+        public boolean all = false;
+
+        @Parameter(names = {"-l", "--list", "-list"}, required =  false, description = "List of configured classes and their log levels")
         public boolean list = false;
 
         @Parameter(names = {"-c", "--class", "-class"}, required =  false, description = "Full class name")
@@ -45,6 +48,11 @@ public class HybrisLog {
             return;
         }
 
+        if (jct.all){
+            showAllClasses();
+            return;
+        }
+
         if (jct.list) {
             showListOfClasses();
             return;
@@ -67,6 +75,11 @@ public class HybrisLog {
         }
 
         return;
+    }
+
+    private static void showAllClasses() {
+        String URL = Conf.getWebRoot() + "tools/logging/all";
+        System.out.println(HttpRequest.execute(URL, "", "", HttpMethodsEnum.GET));
     }
 
     private static void showListOfClasses() {
