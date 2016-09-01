@@ -48,19 +48,14 @@ public class HybrisLog {
             return;
         }
 
-        if (jct.all){
+        if (jct.all) {
             showAllClasses();
             return;
-        }
-
-        if (jct.list) {
+        } else if (jct.list) {
             showListOfClasses();
             return;
-        }
-
-        if (!jct.className.equals("") && !jct.logLevel.equals(""))
-        {
-            String response = HttpRequest.execute(Conf.getWebRoot()+"tools/logging/add?" +
+        } else if (!jct.className.equals("") && !jct.logLevel.equals("")) {
+            String response = HttpRequest.execute(Conf.getWebRoot() + "tools/logging/add?" +
                             String.join("&",
                                     Arrays.asList(
                                             String.join("=", CommonUtils.getParam("class", jct.className)),
@@ -72,9 +67,13 @@ public class HybrisLog {
             );
             System.out.println(response);
             return;
+        } else
+        {
+            // no params
+            CommonUtils.tailLogFile();
+            while (true) { Thread.sleep(50); }
         }
 
-        return;
     }
 
     private static void showAllClasses() {

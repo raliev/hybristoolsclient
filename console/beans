@@ -1,0 +1,6 @@
+{
+   "errors" : [ {
+      "message" : "No bean named 'configurationToolController' is defined",
+      "type" : "NoSuchBeanDefinitionError"
+   } ]
+}

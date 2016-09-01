@@ -361,35 +361,13 @@ public class HybrisImpex {
         return impex;
     }
 
-    public static void tailLogFile() throws InterruptedException {
-        File file = new File(Conf.getLogLocation());
-        Observable<String> tailer = FileObservable.tailer()
-                .file(file)
-                .startPosition(file.length())
-                .sampleTimeMs(50)
-                .chunkSize(10)
-                .utf8()
-                .tailText();
 
-        tailer.subscribe(
-                new Action1<String>() {
-                    @Override
-                    public void call(String line) {
-                        System.err.println(line);
-                        System.err.flush();
-                        //if (line.contains("[DefaultImportService] Import was successful")) {
-                            //Thread.currentThread().interrupt();
-                        //}
-                    }
-                }
-        );
-    }
 
 
     static class TailLogger implements Runnable {
         public void run() {
             try {
-                tailLogFile();
+                CommonUtils.tailLogFile();
                 while (Thread.currentThread().isInterrupted()) {
                     Thread.sleep(10);
                 }
