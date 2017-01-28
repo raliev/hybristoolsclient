@@ -25,22 +25,22 @@ import java.util.stream.Collectors;
 public class HybrisConfiguration {
     static class JCommanderCmd extends CommonCommands{
 
-        @Parameter(names = {"-e", "--extension", "-extension" }, description = "Extension")
+        @Parameter(names = {"-e", "--extension", "-extension" }, required = false, description = "Extension")
         public String extension = "";
 
-        @Parameter(names = {"-l", "--list", "-list" }, description = "List of the configuration variables (from memory)")
+        @Parameter(names = {"-l", "--list", "-list" }, required = false, description = "List of the configuration variables (from memory)")
         public boolean list = false;
 
-        @Parameter(names = {"-c", "-check", "--check"}, description = "Check the difference between memory and *.property files (requires -e)")
+        @Parameter(names = {"-c", "-check", "--check"}, required = false, description = "Check the difference between memory and *.property files (requires -e)")
         public boolean check = false;
 
-        @Parameter(names = {"-s", "-sync", "--sync"}, description = "Set all configuration properties in memory that created/updated in *.property files (requires -e)")
+        @Parameter(names = {"-s", "-sync", "--sync"}, required = false, description = "Set all configuration properties in memory that created/updated in *.property files (requires -e)")
         public boolean sync = false;
 
-        @Parameter(names = {"-n", "-name", "--name"}, description = "Name of the property to change (requires -v)")
+        @Parameter(names = {"-n", "-name", "--name"}, required = false, description = "Name of the property to change (requires -v)")
         public String name = "";
 
-        @Parameter(names = {"-v", "-value", "--value"}, description = "New property value (requires -n)")
+        @Parameter(names = {"-v", "-value", "--value"}, required = false, description = "New property value (requires -n)")
         public String value = "";
 
     }
@@ -55,6 +55,7 @@ public class HybrisConfiguration {
 
         } catch (ParameterException e)
         {
+                        e.printStackTrace();
                         CommonUtils.getHelp(jct, pn);
                         return;
         }
